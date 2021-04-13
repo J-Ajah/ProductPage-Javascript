@@ -184,13 +184,46 @@ a{
 
 #cartView{
     position: relative;
-    left: 720px;
+    left: 530px;
+    /* background-color: red; */
+    color: rgba(19, 110, 186);
+    cursor: pointer;
+    border: solid 0px black;
+}
+
+.closeImage{
+    position:absolute;
+    width: 5%;
+    border-radius: 50%;
+    cursor: pointer;
+    right: 0;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.cartError{
+    position: relative;
+    background-color: rgb(245, 241, 241);
+    width: 50%;
+    margin: 50px auto;
+    top: 50px;
+    height: 200px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.cartError h4{
+    font-size: 1.8em;
+    margin-top: 50px;
+    padding-top: 80px;
+    color:rgb(0, 89, 161);
+    text-shadow: 2px 2px 2px rgb(204, 200, 200);   
 }
 
 .div-of-prods .caption{
-    position: relative;
+    /* position: relative;   */
     top: 25px;
-    left: 190px;
+    margin-left: 120px;
     font-size: 20px;
     /* background-color: blue; */
     width: 200px;
@@ -298,11 +331,12 @@ a{
     background: white;
     border-radius: 10px;
     width: 80%;
-    height: 300px;
-    top: 28vh;
+    overflow-y:auto;
+    height: 80%;
+    top: 7vh;
     left: 10%;
     box-shadow: 0 2px 8px rgb(0 0 0 / 26%);
-    /* display: none; */
+    display: none;
 }
 
 .cart-Container.visible {
@@ -381,7 +415,7 @@ a{
 }
 
 
-.individual-products .quantityDiv  #minus{
+.individual-products .quantityDiv  .minus{
    position: absolute;
    margin-left:630px;
    margin-top: 43px;
@@ -389,7 +423,12 @@ a{
    
 }
 
-.individual-products .quantityDiv  #add{
+.cart-Container > :nth-last-child(2){
+    margin-bottom: 100px;
+    /* background-color: red; */
+}
+
+.individual-products .quantityDiv  .add{
     position: absolute;
     margin-left:739px;
     margin-top: 45px;
@@ -415,12 +454,12 @@ input[type=number] {
 .cart-footer{
     position: absolute;
     width: 100%;
-    bottom: 0;
     display: flex;
     justify-content:space-around;
     background-color:rgba(19, 111, 186, 0.864);
     height: 50px;
     padding-bottom: 25px;
+    margin-top: 102px;;
 }
 
 .cart-footer h5{
@@ -430,10 +469,14 @@ input[type=number] {
 
 .cart-footer .continue-text{
     text-decoration: underline;
-    color: rgb(235, 235, 235);
+    color: rgb(250, 249, 249);
     cursor: pointer;
 }
-
+.total-text span{
+    color: rgb(247, 241, 241);
+    font-size: medium;
+    font-size: 1em;
+}
 .cart-footer .btn-checkout{
     height: 35px;
     padding: 10px;
