@@ -21,7 +21,7 @@ class ProductsItem {
     ),
     new Products(
       'Shoe Polish',
-      89.99,
+      79.99,
       4,
       'Shoe sparkler for real gentle men',
       'assets/POLISH.jpg'
@@ -29,7 +29,7 @@ class ProductsItem {
 
     new Products(
       'Unisex Canvas Shoe',
-      89.99,
+      90.99,
       4,
       'Uk made stock canvas for men and women',
       'assets/unisexShoe.jpg'
@@ -37,7 +37,7 @@ class ProductsItem {
 
     new Products(
       'Men Slip on Canvas',
-      89.99,
+      60.99,
       4,
       'Men slip on sneekers',
       'assets/menslipOn.jpg'
@@ -45,7 +45,7 @@ class ProductsItem {
 
     new Products(
       'Alive Sports Shoe',
-      89.99,
+      57.99,
       4,
       'Uk made sports shoe for men and female',
       'assets/images.jpg'
@@ -221,7 +221,7 @@ class ItemCart{
                     
                     <div class='quantityDiv'>
                      <img class='minus' src='assets/minus.png' />
-                     <input type="number" name="quantity" min="0" max="100" value="2" id="num" >
+                     <input type="number" name="quantity" min="0" max="100" value="1" id="num" >
                      <img class='add' src='assets/plusIcon.png' />
                     </div>
      
@@ -300,6 +300,7 @@ class ProductInfo extends CartComponents {
             <div class="product-info-content">
               <h2> ${this.product.title} </h2>
               <h3>  \$${this.product.price}  </h3>
+              <h3>Available Stock: <span>  ${this.product.stock} <span> </h3>
               <p>  ${this.product.description} </p>
             </div>
             <button>  Add to Cart </button>
@@ -331,29 +332,12 @@ class ShoppingCart extends ProductInfo {
       alert("product exits")
     }
  
-    // if (this.cartItems.length == 0) {
-    //   this.cartItems.push(item);
-    // } else {
-    //   for (const prod of this.cartItems) {
-    //     // console.log(prod.title);
-    //     // console.log(item.title);
-    //     if (prod.title == item.title) {
-    //       console.log("They are thesame")
-    //     } else {
-    //       console.log(this.cartItems)
-    //       this.cartItems.push(item);
-    //       console.log(this.cartItems)
-    //     }
-    //   }
-    // }
-
 
   }
 
 
  static findProduct(product){
     for(const productInCart of ShoppingCart.cartItems){
-      console.log(productInCart.title);
       if (product.title === productInCart.title){
         
         return productInCart;
@@ -452,9 +436,11 @@ class ShoppingCart extends ProductInfo {
     this.addEventListeners();
     //Updating the total text
 
+    let total =  cartDiv.querySelector('.quantity span');
+    let quanText = cartDiv.querySelector('.total-text span');
+    quanText.innerText = ShoppingCart.total_PriceAmount();
+    total.innerText = ShoppingCart.total_PriceAmount();
 
-    const quanText = cartDiv.querySelector('.total-text span');
-    quanText.innerText = this.calculateTotal();
    // this.scrollToBottom()
   }
 }
@@ -500,16 +486,7 @@ getProdPositon(product){
       let position = ShoppingCart.cartItems.indexOf(product);
       ShoppingCart.cartItems.splice(position,1);
     }
-    // for(let product of ShoppingCart.cartItems){
-    //      if(product.title === title){
-    //       ShoppingCart.cartItems.splice(title,1);
-    //       console.log(ShoppingCart.cartItems)
-    //       // this.renderCartItems();
-          
-    //      }
-    // }
     
-    console.log(ShoppingCart.cartItems)
     this.renderCartItems();
   }
 
@@ -530,10 +507,19 @@ getProdPositon(product){
     let val = (quantity == "") ? 1 : quantity + 1;
     this.previousElementSibling.value = val;
 
+    // this.totalPrice() 
 
+    
+    let container = document.querySelectorAll('.cart-Container');
+    let totalPrice = container.querySelectorAll('.quantity span')
+      
+       let totalText = container.querySelector('.cart-footer h5 span');
+       totalText.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
+       totalPrice.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
+      console.log(totalText);
   }
 
-  decreaseQuantity() {
+  decreaseQuantity(){
 
     let quantity = parseInt(this.nextElementSibling.value);
     if (quantity != 1) {
@@ -541,10 +527,17 @@ getProdPositon(product){
       this.nextElementSibling.value = val;
     }
 
+    //updates product after calculation
+    // this.calculateTotal();
 
+       let container = document.querySelectorAll('.cart-Container');
+       let totalText = container.querySelector('.cart-footer h5 span');
+
+       totalText.innerText = ShoppingCart.total_PriceAmount();
+   
   }
 
-  calculateTotal() {
+  static total_PriceAmount(){
     let totalSum = 0;
     const productsInCart = document.querySelectorAll('.individual-products');
     // console.dir(productsInCart)
