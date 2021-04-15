@@ -433,15 +433,18 @@ class ShoppingCart extends ProductInfo {
 
     
     cartDiv.querySelector('.continue-text').addEventListener('click', this.closeCartItems)
+    
+    
+    //Adding event listeners to the necessary elements
     this.addEventListeners();
-    //Updating the total text
+  
 
+    //Default calculation of the total amount is done here
     let total =  cartDiv.querySelector('.quantity span');
     let quanText = cartDiv.querySelector('.total-text span');
     quanText.innerText = ShoppingCart.total_PriceAmount();
     total.innerText = ShoppingCart.total_PriceAmount();
 
-   // this.scrollToBottom()
   }
 }
 
@@ -452,22 +455,26 @@ addEventListeners(){
   const products = cartDiv.querySelectorAll('.individual-products');
 
   //Loops through the products and attaches an event listener
-     for(let prod of  products){
-      prod.querySelector('.minus').addEventListener('click', this.decreaseQuantity);
-      prod.querySelector('.add').addEventListener('click', this.increaseQuantity)
-      prod.querySelector('.delete-img').addEventListener('click',(e)=>{
-      let prodParent = e.currentTarget.parentNode;
-      let prodTitle = prodParent.querySelector('h4');
-       this.deleteItem(prodTitle);
-    })
 
-     }
+        for(let i = 0; i < products.length; i++){
+          // products[i].addEventListener('click',)
+          products[i].querySelector('.minus').addEventListener('click', this.decreaseQuantity);
+          products[i].querySelector('.add').addEventListener('click', this.increaseQuantity);
+
+          products[i].querySelector('.delete-img').addEventListener('click',(e)=>{
+              let prodParent = e.currentTarget.parentNode;
+              let prodTitle = prodParent.querySelector('h4');
+               this.deleteItem(prodTitle);
+            })
+        
+        }
 
 
 }
   
 
-getProdPositon(product){
+//Returns product 
+getProd(product){
   for(let productInCart of ShoppingCart.cartItems){
     if (productInCart.title == product){
       return productInCart;
@@ -477,16 +484,15 @@ getProdPositon(product){
 
 
   deleteItem(prod){
-    console.dir(ShoppingCart.cartItems)
     let title = prod.innerText;
-    let product = this.getProdPositon(title);
+    let product = this.getProd(title);
 
     if(product != null){
-      console.log(product);
       let position = ShoppingCart.cartItems.indexOf(product);
       ShoppingCart.cartItems.splice(position,1);
     }
     
+    //the next line of code re-renders our cart items
     this.renderCartItems();
   }
 
@@ -509,13 +515,19 @@ getProdPositon(product){
 
     // this.totalPrice() 
 
-    
-    let container = document.querySelectorAll('.cart-Container');
-    let totalPrice = container.querySelectorAll('.quantity span')
-      
-       let totalText = container.querySelector('.cart-footer h5 span');
-       totalText.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
-       totalPrice.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
+    let sum = 0, totalPrice;
+    // let container = document.querySelectorAll('.cart-Container');
+    let individualProducts = document.querySelectorAll('.individual-products');
+
+        for(let prod of individualProducts){
+           totalPrice = prod.querySelector('.quantity span')
+           console.log(totalPrice)
+          totalPrice.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
+
+        }
+       let totalText = document.querySelector('.cart-footer h5 span');
+       
+       totalText.innerText = sum;
       console.log(totalText);
   }
 
@@ -539,7 +551,10 @@ getProdPositon(product){
 
   static total_PriceAmount(){
     let totalSum = 0;
+
+    // for(let i = 0; i < )
     const productsInCart = document.querySelectorAll('.individual-products');
+    console.log(productsInCart)
     // console.dir(productsInCart)
     let listOfProd = [];
     listOfProd.push(productsInCart);
