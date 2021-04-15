@@ -325,7 +325,7 @@ class ShoppingCart extends ProductInfo {
 
   static addNewItem(item) {
     const ui = new WebUI();
-    const cartDiv = ui.body.querySelector('.cart-Container');
+    // const cartDiv = ui.body.querySelector('.cart-Container');
     if(ShoppingCart.findProduct(item) == null){
       this.cartItems.push(item);
     }else{
@@ -509,53 +509,54 @@ getProd(product){
     //  const ancestoryContainer = document.querySelector('.individual-products')
 
 
-    let quantity = parseInt(this.previousElementSibling.value);
+    let quantity = parseFloat(this.previousElementSibling.value);
     let val = (quantity == "") ? 1 : quantity + 1;
     this.previousElementSibling.value = val;
 
     // this.totalPrice() 
+    let itemPrice = this.parentNode.previousElementSibling.children[0];
+    let totalSpan = this.parentNode.nextElementSibling.children[0];
+    let total =  parseFloat(totalSpan.innerText) + parseFloat(itemPrice.innerText);
+    totalSpan.innerText = total.toFixed(2);
 
-    let sum = 0, totalPrice;
-    // let container = document.querySelectorAll('.cart-Container');
-    let individualProducts = document.querySelectorAll('.individual-products');
 
-        for(let prod of individualProducts){
-           totalPrice = prod.querySelector('.quantity span')
-           console.log(totalPrice)
-          totalPrice.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
 
-        }
-       let totalText = document.querySelector('.cart-footer h5 span');
-       
-       totalText.innerText = sum;
-      console.log(totalText);
+     let totalItem =document.querySelector('.cart-footer .total-text span');
+     totalItem.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
+     console.log(totalItem)
+    // 
   }
 
   decreaseQuantity(){
 
-    let quantity = parseInt(this.nextElementSibling.value);
+    let quantity = parseFloat(this.nextElementSibling.value);
     if (quantity != 1) {
       let val = (quantity == "") ? 1 : quantity - 1;
       this.nextElementSibling.value = val;
     }
 
-    //updates product after calculation
-    // this.calculateTotal();
 
-       let container = document.querySelectorAll('.cart-Container');
-       let totalText = container.querySelector('.cart-footer h5 span');
-
-       totalText.innerText = ShoppingCart.total_PriceAmount();
+     let itemPrice = this.parentNode.previousElementSibling.children[0];
+     let totalSpan = this.parentNode.nextElementSibling.children[0];
+     let total = 0;
+   
+     if(parseFloat(totalSpan.innerText) === parseFloat(itemPrice.innerText)){
+         return;
+     }
+     total = parseFloat(totalSpan.innerText).toFixed(2)  - parseFloat(itemPrice.innerText).toFixed(2);
+     totalSpan.innerText = total.toFixed(2);
+     
+   
    
   }
 
   static total_PriceAmount(){
     let totalSum = 0;
 
-    // for(let i = 0; i < )
+
     const productsInCart = document.querySelectorAll('.individual-products');
     console.log(productsInCart)
-    // console.dir(productsInCart)
+
     let listOfProd = [];
     listOfProd.push(productsInCart);
     //  quantity.forEach(item => totalSum =  parseInt(item.value));
