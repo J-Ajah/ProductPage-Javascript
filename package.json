@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "cypress": "^7.4.0",
+    "cypress-junit-reporter": "^1.3.1"
+  },
+  "dependencies": {
+    "mocha": "^8.4.0",
+    "mocha-junit-reporter": "^2.0.0",
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.0"
+  },
+  "scripts": {
+    "test": "mocha --recursive --reporter mocha-junit-reporter --timeout 60000 --exit"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "projectId": "mwtf3v",
+  "reporter": "cypress-junit-reporter",
+    "reporterOptions": {
+      "testsuitesTitle":true,
+        "mochaFile": "./cypress/reports/junit.[hash].xml"
+    }
+  
+}

@@ -1,5 +1,3 @@
-
-
 //productsItem starts here
 class ProductsItem {
   products = [
@@ -73,20 +71,20 @@ class ProductsItem {
 
     divOfProds.insertAdjacentHTML('afterbegin',
       '<div  class="info-div"> <h2 class="caption"> Recent Products </h2>  <h2 class=" caption"><a id="cartView"> View Cart Items <a/> </h2>   </div>');
-     
 
-      //adding Event listner
-        //  console.log(divOfProds);
-       divOfProds.querySelector('#cartView').addEventListener('click', function(){
-         ShoppingCart.showCartItems();
-         let shopcart = new ShoppingCart();
-         shopcart.renderCartItems();
-       });
+
+    //adding Event listner
+    //  console.log(divOfProds);
+    divOfProds.querySelector('#cartView').addEventListener('click', function () {
+      ShoppingCart.showCartItems();
+      let shopcart = new ShoppingCart();
+      shopcart.renderCartItems();
+    });
 
   }
 
 
-  
+
 
 }
 
@@ -200,20 +198,19 @@ class Products {
   }
 }
 
-class ItemCart{
+class ItemCart {
 
-  constructor(item){
-      this.item = item;
+  constructor(item) {
+    this.item = item;
   }
-   
+
   cartItemCard() {
     //Renders each individual product
 
     const prods = document.createElement('div')
     prods.className = 'individual-products';
-    console.log(this.item)
-  
-      prods.innerHTML = `
+
+    prods.innerHTML = `
                     <img class="delete-img" src="assets/delete.png"   alt="" />
                     <img class="prod-image" src="${this.item.imageUrl}"   alt="" />
                     <h4> ${this.item.title} </h4>
@@ -236,9 +233,9 @@ class ItemCart{
 
 
 
-      // cartDiv.append(prods)
-      //  console.log(product)
-      
+    // cartDiv.append(prods)
+    //  console.log(product)
+
 
 
     return prods;
@@ -268,7 +265,7 @@ class CartComponents extends WebUI {
   }
 
   addToCart() {
-
+    
     this.showBackDropOverlay();
     // console.log(this.product);
 
@@ -308,8 +305,9 @@ class ProductInfo extends CartComponents {
       
       `;
 
-    const addtoCartButton = list.querySelector('button');
+    let addtoCartButton = list.querySelector('button');
     addtoCartButton.addEventListener('click', this.addToCart.bind(this))
+   
     return list;
   }
 }
@@ -318,42 +316,64 @@ class ProductInfo extends CartComponents {
 
 
 class ShoppingCart extends ProductInfo {
-  static cartItems = [];
-   constructor(product){
-     super(product);
-   }
+  static  cartItems = [];
+  
+  constructor(product) {
+    super(product);
+   this.overAllItems = 0;
+
+  }
 
   static addNewItem(item) {
     const ui = new WebUI();
     // const cartDiv = ui.body.querySelector('.cart-Container');
-    if(ShoppingCart.findProduct(item) == null){
-      this.cartItems.push(item);
-    }else{
+    console.log(ShoppingCart.cartItems)
+    console.log(ShoppingCart.cartItems[2])
+    if (ShoppingCart.findProduct(item) == null) {
+      ShoppingCart.cartItems.push(item);
+    } else {
       alert("product exits")
     }
- 
+
 
   }
 
 
- static findProduct(product){
-    for(const productInCart of ShoppingCart.cartItems){
-      if (product.title === productInCart.title){
-        
-        return productInCart;
-      }else{
-        return null;
-      }
+  static findProduct(product) {
+    // for (let productInCart of ShoppingCart.cartItems) {
+    //   console.log(product.title)
+    //   console.log(ShoppingCart.cartItems)
+    //   console.log("================================")
+    //   console.log(product.title +" == "+ productInCart.title)
+    //   console.log(product.title == productInCart.title)
+    //   if (product.title === productInCart.title) {
+
+    //     return productInCart;
+    //   } else {
+    //     return null;
+    //   }
+    // }
+
+    for(let i = 0; i < ShoppingCart.cartItems.length; i++){
+          if(product.title == ShoppingCart.cartItems[i].title){
+          
+             return ShoppingCart.cartItems[i];
+             
+          }
     }
-  }
 
-  static showCartItems(){
+    return null;
+
+
+}
+
+  static showCartItems() {
     let container = document.querySelector('.cart-Container');
     let backdrop = document.querySelector('#backdrop');
     container.classList.add('visible');
     backdrop.classList.add('visible');
-    
-    
+
+
   }
 
   closeCartItems() {
@@ -362,20 +382,20 @@ class ShoppingCart extends ProductInfo {
     let backdrop = document.querySelector('#backdrop');
     container.classList.remove('visible');
     backdrop.classList.remove('visible');
-    
+
 
   }
 
 
- 
+
   //The next method will be used to render product Items to the screen
   renderCartItems() {
     const ui = new WebUI();
     const cartDiv = ui.body.querySelector('.cart-Container');
     cartDiv.classList.add('visible');
     // this.showCartItems();
-        if(ShoppingCart.cartItems.length === 0){
-          cartDiv.innerHTML = `
+    if (ShoppingCart.cartItems.length === 0) {
+      cartDiv.innerHTML = `
             <img class="closeImage" src="assets/closebutton.jpg" />
             <div class="cartError">
              <h4> No items in cart  yet.</h3>
@@ -383,12 +403,12 @@ class ShoppingCart extends ProductInfo {
              </div>
                 
           `;
-            
 
-          //adding an event listener to the close button
-          cartDiv.querySelector(".closeImage").addEventListener("click", this.closeCartItems)
-        }else{
-    cartDiv.innerHTML = `
+
+      //adding an event listener to the close button
+      cartDiv.querySelector(".closeImage").addEventListener("click", this.closeCartItems)
+    } else {
+      cartDiv.innerHTML = `
        <div class="cart-Heading">   
            <h3>  Product </h3>
 
@@ -404,171 +424,214 @@ class ShoppingCart extends ProductInfo {
        `;
 
 
-   
 
-    for(let prod of ShoppingCart.cartItems){
+
+      for (let prod of ShoppingCart.cartItems) {
         let item = new ItemCart(prod);
-      cartDiv.append(item.cartItemCard());
-    }
+        cartDiv.append(item.cartItemCard());
+      }
 
-    //  });
+      //  });
 
 
-    //Adding a button to continue shoping and total Items div
-    const cartFooterDiv = document.createElement('div');
-    cartFooterDiv.className = 'cart-footer';
-    cartFooterDiv.innerHTML = `
+      //Adding a button to continue shoping and total Items div
+      const cartFooterDiv = document.createElement('div');
+      cartFooterDiv.className = 'cart-footer';
+      cartFooterDiv.innerHTML = `
            <h5 class="total-text"> Total: <span>  </span> </h5>
            <h5 class="continue-text"> Continue Shopping </h5>
            <button class="btn-checkout"> CheckOut </button>
 
 
        `;
-      
-       
-
-      
-    cartDiv.append(cartFooterDiv);
-    //Adding Event listeners to each Items
-
-    
-    cartDiv.querySelector('.continue-text').addEventListener('click', this.closeCartItems)
-    
-    
-    //Adding event listeners to the necessary elements
-    this.addEventListeners();
-  
-
-    //Default calculation of the total amount is done here
-    let total =  cartDiv.querySelector('.quantity span');
-    let quanText = cartDiv.querySelector('.total-text span');
-    quanText.innerText = ShoppingCart.total_PriceAmount();
-    total.innerText = ShoppingCart.total_PriceAmount();
-
-  }
-}
 
 
-addEventListeners(){
-  const ui = new WebUI();
-  const cartDiv = ui.body.querySelector('.cart-Container');
-  const products = cartDiv.querySelectorAll('.individual-products');
-
-  //Loops through the products and attaches an event listener
-
-        for(let i = 0; i < products.length; i++){
-          // products[i].addEventListener('click',)
-          products[i].querySelector('.minus').addEventListener('click', this.decreaseQuantity);
-          products[i].querySelector('.add').addEventListener('click', this.increaseQuantity);
-
-          products[i].querySelector('.delete-img').addEventListener('click',(e)=>{
-              let prodParent = e.currentTarget.parentNode;
-              let prodTitle = prodParent.querySelector('h4');
-               this.deleteItem(prodTitle);
-            })
-        
-        }
 
 
-}
-  
+      cartDiv.append(cartFooterDiv);
+      //Adding Event listeners to each Items
 
-//Returns product 
-getProd(product){
-  for(let productInCart of ShoppingCart.cartItems){
-    if (productInCart.title == product){
-      return productInCart;
+
+      cartDiv.querySelector('.continue-text').addEventListener('click', this.closeCartItems)
+
+
+      //Adding event listeners to the necessary elements
+      this.addEventListeners();
+
+
+      //Default calculation of the total amount is done here
+      // let total = cartDiv.querySelector('.quantity span');
+      // let quanText = cartDiv.querySelector('.total-text span');
+      // quanText.innerText = ShoppingCart.total_PriceAmount();
+      // total.innerText = ShoppingCart.total_PriceAmount();
+
+
+      //calculates the total Items available in the cart
+      this.Items();
+
+
     }
   }
-}
 
 
-  deleteItem(prod){
+  addEventListeners() {
+    const ui = new WebUI();
+    const cartDiv = ui.body.querySelector('.cart-Container');
+    const products = cartDiv.querySelectorAll('.individual-products');
+
+    //Loops through the products and attaches an event listener
+
+    for (let i = 0; i < products.length; i++) {
+      // products[i].addEventListener('click',)
+      products[i].querySelector('.minus').addEventListener('click', (e)=>{
+        this.decreaseQuantity(e)
+      });
+      products[i].querySelector('.add').addEventListener('click', (e)=>{
+        
+        this.increaseQuantity(e);
+        this.Items();
+     
+      });
+
+      products[i].querySelector('.delete-img').addEventListener('click', (e) => {
+        let prodParent = e.currentTarget.parentNode;
+        let prodTitle = prodParent.querySelector('h4');
+        this.deleteItem(prodTitle);
+      })
+
+    }
+
+
+  }
+
+
+  //Returns product 
+  getProd(product) {
+    for (let productInCart of ShoppingCart.cartItems) {
+      if (productInCart.title == product) {
+        return productInCart;
+      }
+    }
+  }
+
+
+  deleteItem(prod) {
+   
     let title = prod.innerText;
     let product = this.getProd(title);
 
-    if(product != null){
+    if (product != null) {
       let position = ShoppingCart.cartItems.indexOf(product);
-      ShoppingCart.cartItems.splice(position,1);
+      ShoppingCart.cartItems.splice(position, 1);
     }
-    
+
     //the next line of code re-renders our cart items
     this.renderCartItems();
+    
+    
   }
 
-   scrollToBottom () {
-     let ui = new WebUI();
+  scrollToBottom() {
+    let ui = new WebUI();
     let div = ui.body.querySelector('.cart-Container');;
     div.scrollTop = div.scrollHeight - div.clientHeight;
+  }
+
+   Items(){
+      
+     let count = 0;
+    let totalItem = document.querySelector('.cart-footer .total-text span');
+    let productsInCart = document.querySelectorAll('.individual-products');
+    // console.log(productsInCart)
+ 
+    this.overAllItems = 0;
+    for (let prods of productsInCart) {
+    
+      let price = prods.children[5].children[0].innerText;
+     
+      this.overAllItems = this.overAllItems + parseFloat(price)
+      totalItem.innerText = this.overAllItems.toFixed(2);
+      count ++;
+      // console.log(totalSum)
+    }
  }
 
 
-
-
-  increaseQuantity() {
+  increaseQuantity(e) {
     //  const ancestoryContainer = document.querySelector('.individual-products')
+   
 
-
-    let quantity = parseFloat(this.previousElementSibling.value);
+    
+    let valueItem =e.target.previousElementSibling.value;
+    let quantity = parseFloat(valueItem);
     let val = (quantity == "") ? 1 : quantity + 1;
-    this.previousElementSibling.value = val;
+  
 
-    // this.totalPrice() 
-    let itemPrice = this.parentNode.previousElementSibling.children[0];
-    let totalSpan = this.parentNode.nextElementSibling.children[0];
-    let total =  parseFloat(totalSpan.innerText) + parseFloat(itemPrice.innerText);
+    e.target.previousElementSibling.value = val;
+   
+
+
+     
+    let itemPrice = e.target.parentNode.previousElementSibling.children[0];
+    let totalSpan = e.target.parentNode.nextElementSibling.children[0];
+    let total = parseFloat(totalSpan.innerText) + parseFloat(itemPrice.innerText);
     totalSpan.innerText = total.toFixed(2);
 
 
 
-     let totalItem =document.querySelector('.cart-footer .total-text span');
-     totalItem.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
-     console.log(totalItem)
-    // 
+    // let totalItem = document.querySelector('.cart-footer .total-text span');
+    // totalItem.innerText = ShoppingCart.total_PriceAmount().toFixed(2);
+    // console.log(totalItem);
+
+    
+    //Update the overall total price of the Items
+   
   }
 
-  decreaseQuantity(){
 
-    let quantity = parseFloat(this.nextElementSibling.value);
+
+  decreaseQuantity(e) {
+
+    let quantity = parseFloat(e.target.nextElementSibling.value);
     if (quantity != 1) {
       let val = (quantity == "") ? 1 : quantity - 1;
-      this.nextElementSibling.value = val;
+      e.target.nextElementSibling.value = val;
     }
 
 
-     let itemPrice = this.parentNode.previousElementSibling.children[0];
-     let totalSpan = this.parentNode.nextElementSibling.children[0];
-     let total = 0;
-   
-     if(parseFloat(totalSpan.innerText) === parseFloat(itemPrice.innerText)){
-         return;
-     }
-     total = parseFloat(totalSpan.innerText).toFixed(2)  - parseFloat(itemPrice.innerText).toFixed(2);
-     totalSpan.innerText = total.toFixed(2);
-     
-   
-   
+    let itemPrice = e.target.parentNode.previousElementSibling.children[0];
+    let totalSpan = e.target.parentNode.nextElementSibling.children[0];
+    let total = 0;
+
+    if (parseFloat(totalSpan.innerText) === parseFloat(itemPrice.innerText)) {
+      return;
+    }
+    total = parseFloat(totalSpan.innerText).toFixed(2) - parseFloat(itemPrice.innerText).toFixed(2);
+    totalSpan.innerText = total.toFixed(2);
+
+  
+    this.Items();
+
   }
 
-  static total_PriceAmount(){
+  static total_PriceAmount() {
     let totalSum = 0;
 
 
-    const productsInCart = document.querySelectorAll('.individual-products');
-    console.log(productsInCart)
+    let productsInCart = document.querySelectorAll('.individual-products');
 
     let listOfProd = [];
     listOfProd.push(productsInCart);
     //  quantity.forEach(item => totalSum =  parseInt(item.value));
     let count = 0;
 
-
     //calculates the price of  products 
     for (let prods of listOfProd) {
+
       let price = prods[count].children[3].children[0].innerText;
       let proQuant = prods[count].children[4].children[1].value;
-      totalSum += parseFloat(price) * parseFloat(proQuant);
-      count++;
+      totalSum = totalSum + parseFloat(price) * parseFloat(proQuant);
+      count = count + 1
     }
 
 
@@ -577,6 +640,8 @@ getProd(product){
     return totalSum;
 
   }
+
+  
 
 }
 

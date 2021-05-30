@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="true" time="21.6900" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-05-30T22:48:35" tests="0" file="cypress/integration/examples/calculatesItemPrice.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Product Page Test" timestamp="2021-05-30T22:48:35" tests="2" time="21.6900" failures="0">
+    <testcase name="Product Page Test Iterates and Clicks on each Item available" time="1.5830" classname="Iterates and Clicks on each Item available">
+    </testcase>
+    <testcase name="Product Page Test Calculates the price of Items in the cart" time="20.1070" classname="Calculates the price of Items in the cart">
+    </testcase>
+  </testsuite>
+</testsuites>
