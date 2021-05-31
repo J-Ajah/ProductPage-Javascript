@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="true" time="1.8960" tests="4" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-05-31T09:04:12" tests="0" file="cypress/integration/examples/productPageTest.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Product Page Test" timestamp="2021-05-31T09:04:12" tests="4" time="1.8960" failures="0">
+    <testcase name="Product Page Test Verify that that products are been displayed on the page" time="0.8970" classname="Verify that that products are been displayed on the page">
+    </testcase>
+    <testcase name="Product Page Test Iterating over the products and adding 5 Products to cart" time="0.8340" classname="Iterating over the products and adding 5 Products to cart">
+    </testcase>
+    <testcase name="Product Page Test Validate that Item prices are been displayed" time="0.1120" classname="Validate that Item prices are been displayed">
+    </testcase>
+    <testcase name="Product Page Test Validates that nothing happens when the checkout button is clicked" time="0.0530" classname="Validates that nothing happens when the checkout button is clicked">
+    </testcase>
+  </testsuite>
+</testsuites>

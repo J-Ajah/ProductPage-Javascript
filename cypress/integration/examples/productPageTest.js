@@ -47,7 +47,12 @@ describe("Product Page Test",()=>{
         })
     })
 
+    it("Validates that nothing happens when the checkout button is clicked",()=>{
+        cy.get(".btn-checkout").scrollIntoView().should("be.visible").then((e)=>{
+            cy.get(".cart-container").should("be.visible");
+        });
 
+    })
 
     // For Records
     // cypress run --record --key 541655b6-68e8-482b-a24b-46c96b81a1c9

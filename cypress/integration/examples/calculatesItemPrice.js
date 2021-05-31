@@ -1,5 +1,5 @@
 describe("Product Page Test",()=>{
-    let totalPrice;
+    var sum = 0;
     before(()=>{
         cy.visit("http://localhost:90/myWebFolders/ProductPage-Javascript")
     })
@@ -23,7 +23,7 @@ describe("Product Page Test",()=>{
 
     it("Calculates the price of Items in the cart",()=>{
         let total = [];
-        let overAllTotal = 0;
+
      
        cy.get(".quantity span").each((item,index,position)=>{
       
@@ -40,10 +40,15 @@ describe("Product Page Test",()=>{
         cy.screenshot()
 
        })
-    //    let val = 0;
-    //    total.forEach((num,index,list)=> cy.log(val += num))
-       cy.log(total)
+   
+       //calculates  the total items for each product
+     
+        Cypress.$('.quantity span').each(function() {
+        sum += +Cypress.$(this).text()||0;
+        });
 
+        cy.log("The total calculated items amounted to")
+        cy.log(sum)
        
 
        
@@ -53,5 +58,14 @@ describe("Product Page Test",()=>{
         
        
     })
+
+
+    it("Checks if the calculated total equals the total displayed",()=>{
+        cy.get(".total-text span").then((item)=>{
+            expect(parseFloat(item.text())).to.equal(sum)
+        })
+    })
+
+
 
 })
