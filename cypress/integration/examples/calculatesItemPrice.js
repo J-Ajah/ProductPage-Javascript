@@ -3,7 +3,6 @@ describe("Product Page Test",()=>{
     before(()=>{
         cy.visit("http://localhost:90/myWebFolders/ProductPage-Javascript")
     })
-        g
     it("Iterates and Clicks on each Item available",()=>{
         cy.get('[class="div-of-prods"]').find("ul").should(($elem)=>{
             expect($elem.children()).to.have.length(6);
