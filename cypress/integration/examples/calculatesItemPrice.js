@@ -3,7 +3,7 @@ describe("Product Page Test",()=>{
     before(()=>{
         cy.visit("http://localhost:90/myWebFolders/ProductPage-Javascript")
     })
-        
+        g
     it("Iterates and Clicks on each Item available",()=>{
         cy.get('[class="div-of-prods"]').find("ul").should(($elem)=>{
             expect($elem.children()).to.have.length(6);
@@ -16,6 +16,7 @@ describe("Product Page Test",()=>{
             cy.get(item).find("button").click({force:true});
             cy.get(".cart-container").find("div").should('have.class', 'individual-products').then((elements)=>{
                 cy.log(elements)
+                cy.log(elements) 
             })
         })
 
@@ -25,7 +26,7 @@ describe("Product Page Test",()=>{
         let total = [];
 
      
-       cy.get(".quantity span").each((item,index,position)=>{
+       cy.get(".quantity span").each((item)=>{
       
            
            cy.get(item).then((price)=>{
