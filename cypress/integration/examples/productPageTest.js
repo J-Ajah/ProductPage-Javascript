@@ -51,6 +51,8 @@ describe("Product Page Test",()=>{
     it("Validates that nothing happens when the checkout button is clicked",()=>{
         cy.get(".btn-checkout").scrollIntoView().should("be.visible").then((e)=>{
             cy.get(".cart-container").should("be.visible");
+            cy.get(".cart-container").should("be.visible");
+            
         });
 
     })
