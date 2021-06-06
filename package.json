@@ -10,6 +10,9 @@
     "mochawesome-merge": "^4.2.0"
   },
   "scripts": {
-    "test": "mocha --recursive --reporter mocha-junit-reporter --timeout 60000 --exit"
+    "test": "mocha --recursive --reporter mocha-junit-reporter --timeout 60000 --exit",
+    "cy_dashboard":"cypress run --record --key 541655b6-68e8-482b-a24b-46c96b81a1c9",
+    "cy:report": "npm run cleanup &&  npm run cy_dashboard"
+
   }
 }
