@@ -31,6 +31,7 @@ describe("Product Page Test",()=>{
             cy.get(item).find("button").click({force:true});
             cy.get(".cart-container").find("div").should('have.class', 'individual-products').then((elements)=>{
                 cy.log(elements)
+                cy.log("I was added for testing purposes")
             })
         })
 
